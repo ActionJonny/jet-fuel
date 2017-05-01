@@ -1,6 +1,7 @@
 html, body {
   height: 100%;
   text-align: center;
+  margin: 0;
 }
 
 header {
@@ -35,23 +36,23 @@ header {
 
 .folders{
   display: none;
-  position: absolute;
+  position: relative;
   height: 100%;
   width: 100%;
-  top: 0;
-}
-
-.filter-body{
+  top: -101px;
   background-color: rgba(0, 0, 0, 0.6);
-  width: 75%;
-  height: 100%;
-  float: left;
 }
 
-.folder-div{
-  width: 25%;
+.folder-div {
+  /*transition: all 5s;*/
+  position: absolute;
+  width: 40%;
   height: 100%;
-
-  float: right;
+  right: 0;
   background-color: white;
+}
+
+.folder-div-active{
+  /*right: 0px;*/
+  width: 40%;
 }
