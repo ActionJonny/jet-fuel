@@ -1,6 +1,7 @@
 html, body {
   height: 100%;
   text-align: center;
+  margin: 0;
 }
 
 header {
@@ -10,11 +11,11 @@ header {
   background-color: lightslategrey;
 }
 
-h1 {
+.logo {
   text-align: center;
 }
 
-.currentFolder {
+.current-folder {
   position: absolute;
   top: 10px;
   right: 20px;
@@ -27,7 +28,60 @@ h1 {
   color: orange;
 }
 
-.currentFolder:hover {
+.current-folder:hover {
   background-color: orange;
   color: white;
+  cursor: pointer;
+}
+
+.folder-section{
+  display: none;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  top: -101px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.folder-div {
+  /*transition: all 5s;*/
+  position: absolute;
+  width: 40%;
+  height: 100%;
+  right: 0;
+  background-color: white;
+}
+
+.folders-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  border-bottom: 2px lightgrey solid;
+  background-color: rgba(96, 125, 139, 0.74);
+}
+
+.folders-body{
+
+}
+
+.create-new-folder-div{
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: 1px lightgrey solid;
+  padding: 13px;
+}
+
+.add-icon{
+  height: 17px;
+}
+
+.close{
+  height: 21px;
+
+}
+
+.new-folder{
+  margin: 0;
+  padding: 0 13px;
 }
