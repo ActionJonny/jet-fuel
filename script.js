@@ -3,12 +3,12 @@ console.log($('.logo').text());
 
 
 $('.current-folder').on('click', function () {
-$('.folders').show()
+$('.folder-section').show()
   // $('.folders').show("slide", "left" , 1000)
   $('.folder-div').show("slide")
 })
 
-$('.folders').on('click', '.close', function () {
-  $('.folders').hide()
+$('.folder-section').on('click', '.close', function () {
+  $('.folder-section').hide()
 
 })

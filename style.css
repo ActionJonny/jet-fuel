@@ -34,7 +34,7 @@ header {
   cursor: pointer;
 }
 
-.folders{
+.folder-section{
   display: none;
   position: relative;
   height: 100%;
@@ -52,7 +52,36 @@ header {
   background-color: white;
 }
 
-.folder-div-active{
-  /*right: 0px;*/
-  width: 40%;
+.folders-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  border-bottom: 2px lightgrey solid;
+  background-color: rgba(96, 125, 139, 0.74);
+}
+
+.folders-body{
+
+}
+
+.create-new-folder-div{
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: 1px lightgrey solid;
+  padding: 13px;
+}
+
+.add-icon{
+  height: 17px;
+}
+
+.close{
+  height: 21px;
+
+}
+
+.new-folder{
+  margin: 0;
+  padding: 0 13px;
 }
