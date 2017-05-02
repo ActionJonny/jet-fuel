@@ -65,7 +65,8 @@ header {
 
 }
 
-.create-new-folder-div{
+.create-new-folder-div,
+.folder {
   display: flex;
   justify-content: flex-start;
   border-bottom: 1px lightgrey solid;
