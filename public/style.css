@@ -61,16 +61,26 @@ header {
   background-color: rgba(96, 125, 139, 0.74);
 }
 
-.folders-body{
 
-}
-
-.create-new-folder-div,
-.folder {
+.create-new-folder-div {
   display: flex;
   justify-content: flex-start;
   border-bottom: 1px lightgrey solid;
   padding: 13px;
+}
+
+.folder {
+  display: flex;
+  justify-content: flex-start;
+  background-color: white;
+  border: none;
+  border-bottom: 1px lightgrey solid;
+  padding: 13px;
+  width: 100%;
+}
+
+.folder:hover{
+  cursor: pointer;
 }
 
 .add-icon{
@@ -79,13 +89,26 @@ header {
 
 .close{
   height: 21px;
+}
 
+label {
+  margin: 0 16px;
 }
 
 .new-folder{
-  margin: 0 16px;
-      text-align: center;
-      padding: 4px 0;
-      border: none;
-      border-bottom: 2px lightgrey solid;
+  padding: 4px 0;
+  width: 250px;
+  outline: none;
+  border: none;
+}
+
+.new-folder + span {
+  display: block;
+  border-bottom: solid 2px #f28c48;
+  width: 0;
+  transition: all 250ms ease-in-out;
+}
+
+.new-folder:focus + span {
+  width: calc(250px);
 }

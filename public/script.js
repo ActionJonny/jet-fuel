@@ -1,19 +1,3 @@
-console.log("working");
-console.log($('.logo').text());
-
-
-$('.current-folder').on('click', function () {
-  retrieveAllFolders()
-  $('.folder-section').show()
-  // $('.folders').show("slide", "left" , 1000)
-  // $('.folder-div').show("slide")
-
-})
-
-$('.folder-section').on('click', '.close', function () {
-  $('.folder-section').hide()
-})
-
 
 const addNewFolder = (title) => {
   fetch('/folders', {
@@ -22,27 +6,56 @@ const addNewFolder = (title) => {
     body: JSON.stringify({ title })
   })
   .then(response => response.json())
-  .then(json => $('.folder-div').append(`<div id=${json.id} class="folder">${json.title}</div>`))
+  .then(json => $('.folder-div').append(`<button id=${json.id} class="folder" value="${json.title}">${json.title}</button>`))
 }
 
 const appendFolders = (json) => {
-  json.length && json.map(object => {
-    $('.folder-div').append(`<div id=${object.id} class="folder">${object.title}</div>`)
+  json.map(object => {
+    $('.folder-div').append(`<button id=${object.id} class="folder" value="${object.title}">${object.title}</button>`)
   })
 }
 
-const retrieveAllFolders = () => {
-  const foldersArray = $('.folder-div').find('.folder').attr('id')
+const removeDuplicates = (json) => {
+  const foldersArray = $('.folder-div').children('.folder')
+  const folderIds = []
 
-  // const folderIds = foldersArray.each(folder => console.log(folder))
-  // console.log(folderIds);
-  fetch('/folders')
-    .then(response => response.json())
-    .then(json => appendFolders(json))
+  jQuery.each(foldersArray, (i, folder) => folderIds.push(folder.getAttribute("id")) )
+  return json.filter(object => !folderIds.includes(object.id))
 }
+
+const retrieveAllFolders = () => {
+  fetch('/folders')
+  .then(response => response.json())
+  .then(json => {
+    if (json.length) {
+      const result = removeDuplicates(json)
+      appendFolders(result)
+    }
+  })
+}
+
+
+$('.current-folder').on('click', function () {
+  retrieveAllFolders()
+  $('.folder-section').fadeIn(175)
+  // $('.folder-div').slideIn(175)
+
+})
+
+$('.folder-section').on('click', '.close', function () {
+  $('.folder-section').hide()
+})
 
 $('.folder-section').on('click', '.add-icon', function () {
   const title = $('.new-folder').val()
-  addNewFolder(title)
+  title && addNewFolder(title)
   $('.new-folder').val('')
+})
+
+$('.folder-section').on('click', '.folder', function () {
+  console.log($(this).val());
+  // get the id and use it as dynamic url
+  // need a fetch call
+  $('.folder-section').fadeOut(175)
+
 })
