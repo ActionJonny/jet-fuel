@@ -3,13 +3,17 @@ const app = express()
 const bodyParser = require('body-parser')
 const md5 = require('md5')
 
+const environment = 'development';
+const configuration = require('./knexfile')[environment]
+const database = require('knex')(configuration)
+
 app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.set('port', process.env.PORT || 3000)
-app.locals.title = 'Jet Fuel'
-app.locals.folders = []
+// app.locals.title = 'Jet Fuel'
+// app.locals.folders = []
 
 app.get('/', (request, response) => {
   fs.readFile(`${__dirname}/index.html`, (err, file) => {
@@ -17,7 +21,7 @@ app.get('/', (request, response) => {
   })
 })
 
-app.post('/folders', (request, response) => {
+app.post('/api/v1/folders', (request, response) => {
   const { title } = request.body
   const id = md5(title)
 
@@ -25,17 +29,21 @@ app.post('/folders', (request, response) => {
   response.json({ id, title })
 })
 
-app.get('/folders', (request, response) => {
-  const folders = app.locals.folders
-
-  response.json(folders)
+app.get('/api/v1/folders', (request, response) => {
+  database('folders').select()
+    .then(folders => {
+      response.status(200).json(folders)
+    })
+    .catch(error => {
+      console.error('error: ', error)
+    });
 })
 
-app.post('/url', (request, response) => {
-  
+app.post('/api/v1/url', (request, response) => {
+  console.log(request);
 })
 
-app.get('/url', (request, response) => {
+app.get('/api/v1/url', (request, response) => {
   const url = app.locals.url
 
   response.json(url)
