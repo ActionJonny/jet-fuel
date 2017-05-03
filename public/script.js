@@ -49,6 +49,6 @@ const retrieveAllFolders = () => {
 
 $('.folder-section').on('click', '.add-icon', function () {
   const title = $('.new-folder').val()
-  addNewFolder(title)
+  title && addNewFolder(title)
   $('.new-folder').val('')
 })
