@@ -6,12 +6,12 @@ const addNewFolder = (title) => {
     body: JSON.stringify({ title })
   })
   .then(response => response.json())
-  .then(json => $('.folder-div').append(`<button id=${json.id} class="folder">${json.title}</button>`))
+  .then(json => $('.folder-div').append(`<button id=${json.id} class="folder" value="${json.title}">${json.title}</button>`))
 }
 
 const appendFolders = (json) => {
   json.map(object => {
-    $('.folder-div').append(`<button id=${object.id} class="folder">${object.title}</button>`)
+    $('.folder-div').append(`<button id=${object.id} class="folder" value="${object.title}">${object.title}</button>`)
   })
 }
 
@@ -37,16 +37,25 @@ const retrieveAllFolders = () => {
 
 $('.current-folder').on('click', function () {
   retrieveAllFolders()
-  $('.folder-section').show()
+  $('.folder-section').fadeIn(175)
+  // $('.folder-div').slideIn(175)
+
 })
 
 $('.folder-section').on('click', '.close', function () {
   $('.folder-section').hide()
 })
 
-
 $('.folder-section').on('click', '.add-icon', function () {
   const title = $('.new-folder').val()
   title && addNewFolder(title)
   $('.new-folder').val('')
+})
+
+$('.folder-section').on('click', '.folder', function () {
+  console.log($(this).val());
+  // get the id and use it as dynamic url
+  // need a fetch call
+  $('.folder-section').fadeOut(175)
+
 })
