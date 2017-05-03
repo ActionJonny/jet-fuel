@@ -1,12 +1,12 @@
 
 const addNewFolder = (title) => {
-  fetch('/folders', {
+  fetch('/api/v1/folders', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ title })
   })
   .then(response => response.json())
-  .then(json => $('.folder-div').append(`<button id=${json.id} class="folder" value="${json.title}">${json.title}</button>`))
+  .then(json => $('.folder-div').append(`<button id=${json.id} class="folder" value="${title}">${title}</button>`))
 }
 
 const appendFolders = (json) => {
@@ -24,7 +24,7 @@ const removeDuplicates = (json) => {
 }
 
 const retrieveAllFolders = () => {
-  fetch('/folders')
+  fetch('/api/v1/folders')
   .then(response => response.json())
   .then(json => {
     if (json.length) {
@@ -57,5 +57,9 @@ $('.folder-section').on('click', '.folder', function () {
   // get the id and use it as dynamic url
   // need a fetch call
   $('.folder-section').fadeOut(175)
-
+  fetch('/api/v1/links')
+  .then(response => response.json())
+  .then(json => {
+    console.log(json);
+  })
 })

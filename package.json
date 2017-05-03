@@ -2,10 +2,10 @@
   "name": "jet-fuel",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,8 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
-    "md5": "^2.2.1"
+    "knex": "^0.13.0",
+    "md5": "^2.2.1",
+    "pg": "^6.1.5"
   }
 }
