@@ -1,17 +1,4 @@
 
-$('.current-folder').on('click', function () {
-  retrieveAllFolders()
-  $('.folder-section').show()
-  // $('.folders').show("slide", "left" , 1000)
-  // $('.folder-div').show("slide")
-
-})
-
-$('.folder-section').on('click', '.close', function () {
-  $('.folder-section').hide()
-})
-
-
 const addNewFolder = (title) => {
   fetch('/folders', {
     method: 'POST',
@@ -38,14 +25,25 @@ const removeDuplicates = (json) => {
 
 const retrieveAllFolders = () => {
   fetch('/folders')
-    .then(response => response.json())
-    .then(json => {
-      if (json.length) {
-        const result = removeDuplicates(json)
-        appendFolders(result)
-      }
-    })
+  .then(response => response.json())
+  .then(json => {
+    if (json.length) {
+      const result = removeDuplicates(json)
+      appendFolders(result)
+    }
+  })
 }
+
+
+$('.current-folder').on('click', function () {
+  retrieveAllFolders()
+  $('.folder-section').show()
+})
+
+$('.folder-section').on('click', '.close', function () {
+  $('.folder-section').hide()
+})
+
 
 $('.folder-section').on('click', '.add-icon', function () {
   const title = $('.new-folder').val()

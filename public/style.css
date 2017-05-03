@@ -61,9 +61,6 @@ header {
   background-color: rgba(96, 125, 139, 0.74);
 }
 
-.folders-body{
-
-}
 
 .create-new-folder-div,
 .folder {
@@ -79,13 +76,29 @@ header {
 
 .close{
   height: 21px;
+}
+
+label {
+  margin: 0 16px;
 
 }
 
 .new-folder{
-  margin: 0 16px;
-      text-align: center;
-      padding: 4px 0;
-      border: none;
-      border-bottom: 2px lightgrey solid;
+  /*margin: 0 16px;*/
+  /*text-align: center;*/
+  padding: 4px 0;
+  width: 250px;
+  outline: none;
+  border: none;
+}
+
+.new-folder + span {
+  display: block;
+  border-bottom: solid 2px #f28c48;
+  width: 0;
+  transition: width 250ms ease-in-out;
+}
+
+.new-folder:focus + span {
+  width: calc(250px);
 }
