@@ -1,6 +1,3 @@
-console.log("working");
-console.log($('.logo').text());
-
 
 $('.current-folder').on('click', function () {
   retrieveAllFolders()
@@ -26,19 +23,28 @@ const addNewFolder = (title) => {
 }
 
 const appendFolders = (json) => {
-  json.length && json.map(object => {
+  json.map(object => {
     $('.folder-div').append(`<div id=${object.id} class="folder">${object.title}</div>`)
   })
 }
 
-const retrieveAllFolders = () => {
-  const foldersArray = $('.folder-div').find('.folder').attr('id')
+const removeDuplicates = (json) => {
+  const foldersArray = $('.folder-div').children('.folder')
+  const folderIds = []
 
-  // const folderIds = foldersArray.each(folder => console.log(folder))
-  // console.log(folderIds);
+  jQuery.each(foldersArray, (i, folder) => folderIds.push(folder.getAttribute("id")) )
+  return json.filter(object => !folderIds.includes(object.id))
+}
+
+const retrieveAllFolders = () => {
   fetch('/folders')
     .then(response => response.json())
-    .then(json => appendFolders(json))
+    .then(json => {
+      if (json.length) {
+        const result = removeDuplicates(json)
+        appendFolders(result)
+      }
+    })
 }
 
 $('.folder-section').on('click', '.add-icon', function () {
