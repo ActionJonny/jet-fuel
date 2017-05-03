@@ -18,9 +18,8 @@ const appendFolders = (json) => {
 const removeDuplicates = (json) => {
   const foldersArray = $('.folder-div').children('.folder')
   const folderIds = []
-
   jQuery.each(foldersArray, (i, folder) => folderIds.push(folder.getAttribute("id")) )
-  return json.filter(object => !folderIds.includes(object.id))
+  return json.filter(object => !folderIds.includes(object.id.toString()) )
 }
 
 const retrieveAllFolders = () => {

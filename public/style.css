@@ -8,8 +8,9 @@ header {
   display: flex;
   justify-content: center;
   position: relative;
-  background-color: lightslategrey;
-}
+  background-color: #57c5b7;
+  color: white;
+}psql
 
 .logo {
   text-align: center;
