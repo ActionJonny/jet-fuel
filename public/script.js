@@ -57,5 +57,9 @@ $('.folder-section').on('click', '.folder', function () {
   // get the id and use it as dynamic url
   // need a fetch call
   $('.folder-section').fadeOut(175)
-
+  fetch('/url')
+  .then(response => response.json())
+  .then(json => {
+    console.log(json);
+  })
 })

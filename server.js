@@ -31,6 +31,16 @@ app.get('/folders', (request, response) => {
   response.json(folders)
 })
 
+app.post('/url', (request, response) => {
+  
+})
+
+app.get('/url', (request, response) => {
+  const url = app.locals.url
+
+  response.json(url)
+})
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`)
 })
