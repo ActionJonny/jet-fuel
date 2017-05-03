@@ -22,11 +22,16 @@ app.get('/', (request, response) => {
 })
 
 app.post('/api/v1/folders', (request, response) => {
-  const { title } = request.body
-  const id = md5(title)
+  const folder = request.body
 
-  app.locals.folders.push({ id, title })
-  response.json({ id, title })
+  database('folders').insert(folder, 'id')
+    .then(folder => {
+      console.log('folder: ', folder);
+      response.status(201).json({ id: folder[0] })
+    })
+    .catch(error => {
+      console.log('error: ', error);
+    });
 })
 
 app.get('/api/v1/folders', (request, response) => {
@@ -39,16 +44,31 @@ app.get('/api/v1/folders', (request, response) => {
     });
 })
 
-app.post('/api/v1/url', (request, response) => {
-  console.log(request);
+app.post('/api/v1/links', (request, response) => {
+  const { long_url, folder_id } = request.body
+  const short_url = md5(long_url)
+  const link = { long_url, short_url, folder_id }
+
+  database('links').insert(link, 'id')
+    .then(link => {
+      console.log('link: ', link);
+      response.status(201).json({ id: link[0] })
+    })
+    .catch(error => {
+      console.error('error: ', error)
+    })
 })
 
-app.get('/api/v1/url', (request, response) => {
-  const url = app.locals.url
-
-  response.json(url)
+app.get('/api/v1/links', (request, response) => {
+  database('links').select()
+    .then(links => {
+      response.status(200).json(links)
+    })
+    .catch(error => {
+      console.error('error: ', error)
+    })
 })
 
 app.listen(app.get('port'), () => {
-  console.log(`${app.locals.title} is running on ${app.get('port')}.`)
+  console.log(`port is running on ${app.get('port')}.`)
 })
