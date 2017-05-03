@@ -62,12 +62,25 @@ header {
 }
 
 
-.create-new-folder-div,
-.folder {
+.create-new-folder-div {
   display: flex;
   justify-content: flex-start;
   border-bottom: 1px lightgrey solid;
   padding: 13px;
+}
+
+.folder {
+  display: flex;
+  justify-content: flex-start;
+  background-color: white;
+  border: none;
+  border-bottom: 1px lightgrey solid;
+  padding: 13px;
+  width: 100%;
+}
+
+.folder:hover{
+  cursor: pointer;
 }
 
 .add-icon{
@@ -80,12 +93,9 @@ header {
 
 label {
   margin: 0 16px;
-
 }
 
 .new-folder{
-  /*margin: 0 16px;*/
-  /*text-align: center;*/
   padding: 4px 0;
   width: 250px;
   outline: none;
@@ -96,7 +106,7 @@ label {
   display: block;
   border-bottom: solid 2px #f28c48;
   width: 0;
-  transition: width 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
 }
 
 .new-folder:focus + span {

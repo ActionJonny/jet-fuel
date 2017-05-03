@@ -6,12 +6,12 @@ const addNewFolder = (title) => {
     body: JSON.stringify({ title })
   })
   .then(response => response.json())
-  .then(json => $('.folder-div').append(`<div id=${json.id} class="folder">${json.title}</div>`))
+  .then(json => $('.folder-div').append(`<button id=${json.id} class="folder">${json.title}</button>`))
 }
 
 const appendFolders = (json) => {
   json.map(object => {
-    $('.folder-div').append(`<div id=${object.id} class="folder">${object.title}</div>`)
+    $('.folder-div').append(`<button id=${object.id} class="folder">${object.title}</button>`)
   })
 }
 
