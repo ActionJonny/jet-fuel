@@ -63,14 +63,31 @@ $('.folder-section').on('click', '.folder', function () {
   $('.folder-section').fadeOut(175)
   addCurrentFolder($(this))
 
-  const folder_id = $(this).attr('id')
+  const folderId = $(this).attr('id')
 
   $('.links-div').children().remove()
-  fetch(`/api/v1/folders/${folder_id}/links`)
+
+  fetch(`/api/v1/folders/${folderId}/links`)
     .then(response => response.json())
     .then(json => {
       const result = removeDuplicates(json, 'links')
       console.log(result);
       result.map(link => $('.links-div').append(`<div id=${link.id} class="links">${link.long_url}</div>`))
     })
+})
+
+$('.submit').on('click', function () {
+  const folderId = $('.current').attr('id')
+  const longUrl = $('.link-input').val()
+  console.log(longUrl, folderId);
+  fetch('/api/v1/links', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ long_url: longUrl, folder_id: folderId })
+  })
+  .then(response => console.log("working"))
+    // console.log(response.json())
+
+    // response.json()
+  // .then(json => console.log("working"))
 })
