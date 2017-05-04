@@ -37,12 +37,11 @@ const retrieveAllFolders = () => {
 $('.current-folder').on('click', function () {
   retrieveAllFolders()
   $('.folder-section').fadeIn(175)
-  // $('.folder-div').slideIn(175)
 
 })
 
 $('.folder-section').on('click', '.close', function () {
-  $('.folder-section').hide()
+  $('.folder-section').fadeOut(175)
 })
 
 $('.folder-section').on('click', '.add-icon', function () {
@@ -52,13 +51,13 @@ $('.folder-section').on('click', '.add-icon', function () {
 })
 
 $('.folder-section').on('click', '.folder', function () {
-  console.log($(this).val());
-  // get the id and use it as dynamic url
-  // need a fetch call
+  const folder_id = $(this).attr('id')
+
   $('.folder-section').fadeOut(175)
-  fetch('/api/v1/links')
-  .then(response => response.json())
-  .then(json => {
-    console.log(json);
-  })
+  fetch(`/api/v1/folders/${folder_id}/links`)
+    .then(response => response.json())
+    .then(json => {
+      console.log(json);
+      json.map(link => $('.links').append(`<div id=${link.id}>${link.long_url}</div>`))
+    })
 })
