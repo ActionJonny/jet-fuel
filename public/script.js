@@ -6,8 +6,9 @@ const addNewFolder = (title) => {
     body: JSON.stringify({ title })
   })
   .then(response => response.json())
-  .then(json => $('.folder-div').append(`<button id=${json.id} class="folder" value="${title}">${title}</button>`))
+  .then(json => console.log(json))
 }
+// $('.folder-div').append(`<button id=${json.id} class="folder" value="${title}">${title}</button>`)
 
 const appendFolders = (json) => {
   json.map(object => {
@@ -76,18 +77,19 @@ $('.folder-section').on('click', '.folder', function () {
     })
 })
 
-$('.submit').on('click', function () {
+$('.submit').on('click', function (e) {
+  e.preventDefault()
   const folderId = $('.current').attr('id')
   const longUrl = $('.link-input').val()
   console.log(longUrl, folderId);
+
   fetch('/api/v1/links', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ long_url: longUrl, folder_id: folderId })
   })
-  .then(response => console.log("working"))
-    // console.log(response.json())
+  .then(response => response.json())
+  .then(json => console.log(json))
+  .catch(error => console.log(error))
 
-    // response.json()
-  // .then(json => console.log("working"))
 })
