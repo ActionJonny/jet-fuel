@@ -15,11 +15,11 @@ const appendFolders = (json) => {
   })
 }
 
-const removeDuplicates = (json) => {
-  const foldersArray = $('.folder-div').children('.folder')
-  const folderIds = []
-  jQuery.each(foldersArray, (i, folder) => folderIds.push(folder.getAttribute("id")) )
-  return json.filter(object => !folderIds.includes(object.id.toString()) )
+const removeDuplicates = (json, thing) => {
+  const thingArray = $(`.${thing}-div`).children(`.${thing}`)
+  const arrayIds = []
+  jQuery.each(thingArray, (i, thing) => arrayIds.push(thing.getAttribute("id")) )
+  return json.filter(object => !arrayIds.includes(object.id.toString()) )
 }
 
 const retrieveAllFolders = () => {
@@ -27,7 +27,7 @@ const retrieveAllFolders = () => {
   .then(response => response.json())
   .then(json => {
     if (json.length) {
-      const result = removeDuplicates(json)
+      const result = removeDuplicates(json, 'folder')
       appendFolders(result)
     }
   })
@@ -57,7 +57,8 @@ $('.folder-section').on('click', '.folder', function () {
   fetch(`/api/v1/folders/${folder_id}/links`)
     .then(response => response.json())
     .then(json => {
-      console.log(json);
-      json.map(link => $('.links').append(`<div id=${link.id}>${link.long_url}</div>`))
+      const result = removeDuplicates(json, 'links')
+      console.log(result);
+      result.map(link => $('.links-div').append(`<div id=${link.id} class="links">${link.long_url}</div>`))
     })
 })
