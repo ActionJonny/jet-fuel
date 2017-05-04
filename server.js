@@ -19,6 +19,17 @@ app.get('/', (request, response) => {
   })
 })
 
+app.get('/:short_url', (request, response) => {
+  database('links').where('short_url', request.params.short_url).select()
+    .then(link => {
+      if(link.length){
+        const url = link[0].long_url
+        response.redirect(`http://${url}`)
+      }
+    })
+    .catch(error => console.error(error))
+})
+
 app.post('/api/v1/folders', (request, response) => {
   const folder = request.body
 
@@ -54,12 +65,11 @@ app.get('/api/v1/folders/:id/links', (request, response) => {
 
 app.post('/api/v1/links', (request, response) => {
   const { long_url, folder_id } = request.body
-  const substring = md5(long_url).substring(0, 5)
-  const short_url = `http://localhost:3000/${substring}`
+  const short_url = md5(long_url).substring(0, 5)
   const link = { long_url, short_url, folder_id }
   console.log(link);
 
-  database('links').insert(link, ['id', 'short_url', 'created_at'])
+  database('links').insert(link, ['id', 'short_url', 'created_at', 'long_url'])
     .then(link => {
       console.log('link: ', link);
       response.status(201).json(...link)
