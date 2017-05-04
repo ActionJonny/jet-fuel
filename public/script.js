@@ -100,9 +100,17 @@ $('.submit').on('click', function (e) {
     body: JSON.stringify({ long_url: longUrl, folder_id: folderId })
   })
   .then(response => response.json())
-  .then(json => $('.links-div').append(
-    `<div id=${json.id} class="links">${longUrl}</div>
-    <div>${json.short_url}</div>`
+  .then(link => $('.links-div').append(
+    `<div id=${link.id} class="links">
+      <div class="link-header">
+        <a href='/${link.short_url}'><h3>${link.short_url}</h3></a>
+      </div>
+      <div class="link-body">
+        <p>${link.long_url}</p>
+        <p>${link.visits}</p>
+        <p>${link.created_at}</p>
+      </div>
+    </div>`
   ))
   .catch(error => console.log(error))
 

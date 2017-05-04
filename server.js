@@ -69,7 +69,7 @@ app.post('/api/v1/links', (request, response) => {
   const link = { long_url, short_url, folder_id }
   console.log(link);
 
-  database('links').insert(link, ['id', 'short_url', 'created_at'])
+  database('links').insert(link, ['id', 'short_url', 'created_at', 'long_url'])
     .then(link => {
       console.log('link: ', link);
       response.status(201).json(...link)
