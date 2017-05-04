@@ -23,8 +23,8 @@ app.get('/:short_url', (request, response) => {
   database('links').where('short_url', request.params.short_url).select()
     .then(link => {
       if(link.length){
-        response.redirect(301, 'www.google.com')
         const url = link[0].long_url
+        response.redirect(`http://${url}`)
       }
     })
     .catch(error => console.error(error))

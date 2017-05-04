@@ -76,7 +76,7 @@ $('.folder-section').on('click', '.folder', function () {
       result.map(link => $('.links-div').append(
              `<div id=${link.id} class="links">
                <div class="link-header">
-                 <a href=${link.short_url}><h3>${link.short_url}</h3></a>
+                 <a href='/${link.short_url}'><h3>${link.short_url}</h3></a>
                </div>
                <div class="link-body">
                  <p>${link.long_url}</p>
