@@ -42,15 +42,25 @@ app.get('/api/v1/folders', (request, response) => {
     });
 })
 
+app.get('/api/v1/folders/:id/links', (request, response) => {
+  database('links').where('folder_id', request.params.id).select()
+    .then(links => {
+      response.status(200).json(links)
+    })
+    .catch(error => {
+      console.error('error: ', error)
+    });
+})
+
 app.post('/api/v1/links', (request, response) => {
   const { long_url, folder_id } = request.body
   const short_url = md5(long_url)
   const link = { long_url, short_url, folder_id }
 
-  database('links').insert(link, 'id')
+  database('links').insert(link, ['id', 'short_url'])
     .then(link => {
       console.log('link: ', link);
-      response.status(201).json({ id: link[0] })
+      response.status(201).json(...link)
     })
     .catch(error => {
       console.error('error: ', error)

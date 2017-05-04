@@ -15,11 +15,11 @@ const appendFolders = (json) => {
   })
 }
 
-const removeDuplicates = (json) => {
-  const foldersArray = $('.folder-div').children('.folder')
-  const folderIds = []
-  jQuery.each(foldersArray, (i, folder) => folderIds.push(folder.getAttribute("id")) )
-  return json.filter(object => !folderIds.includes(object.id.toString()) )
+const removeDuplicates = (json, thing) => {
+  const thingArray = $(`.${thing}-div`).children(`.${thing}`)
+  const arrayIds = []
+  jQuery.each(thingArray, (i, thing) => arrayIds.push(thing.getAttribute("id")) )
+  return json.filter(object => !arrayIds.includes(object.id.toString()) )
 }
 
 const retrieveAllFolders = () => {
@@ -27,22 +27,29 @@ const retrieveAllFolders = () => {
   .then(response => response.json())
   .then(json => {
     if (json.length) {
-      const result = removeDuplicates(json)
+      const result = removeDuplicates(json, 'folder')
       appendFolders(result)
     }
   })
 }
 
+const addCurrentFolder = (folder) => {
+  const currentFolder = folder.text()
+  const folderId = folder.attr('id')
+  $('.current').text(`${currentFolder}`)
+  $('.current').attr('id', folderId)
+}
+
+
 
 $('.current-folder').on('click', function () {
   retrieveAllFolders()
   $('.folder-section').fadeIn(175)
-  // $('.folder-div').slideIn(175)
 
 })
 
 $('.folder-section').on('click', '.close', function () {
-  $('.folder-section').hide()
+  $('.folder-section').fadeOut(175)
 })
 
 $('.folder-section').on('click', '.add-icon', function () {
@@ -51,14 +58,36 @@ $('.folder-section').on('click', '.add-icon', function () {
   $('.new-folder').val('')
 })
 
+
 $('.folder-section').on('click', '.folder', function () {
-  console.log($(this).val());
-  // get the id and use it as dynamic url
-  // need a fetch call
   $('.folder-section').fadeOut(175)
-  fetch('/api/v1/links')
-  .then(response => response.json())
-  .then(json => {
-    console.log(json);
+  addCurrentFolder($(this))
+
+  const folderId = $(this).attr('id')
+
+  $('.links-div').children().remove()
+
+  fetch(`/api/v1/folders/${folderId}/links`)
+    .then(response => response.json())
+    .then(json => {
+      const result = removeDuplicates(json, 'links')
+      console.log(result);
+      result.map(link => $('.links-div').append(`<div id=${link.id} class="links">${link.long_url}</div>`))
+    })
+})
+
+$('.submit').on('click', function () {
+  const folderId = $('.current').attr('id')
+  const longUrl = $('.link-input').val()
+  console.log(longUrl, folderId);
+  fetch('/api/v1/links', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ long_url: longUrl, folder_id: folderId })
   })
+  .then(response => console.log("working"))
+    // console.log(response.json())
+
+    // response.json()
+  // .then(json => console.log("working"))
 })

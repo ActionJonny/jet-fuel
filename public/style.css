@@ -10,7 +10,7 @@ header {
   position: relative;
   background-color: #57c5b7;
   color: white;
-}psql
+}
 
 .logo {
   text-align: center;
@@ -37,10 +37,10 @@ header {
 
 .folder-section{
   display: none;
-  position: relative;
+  position: absolute;
   height: 100%;
   width: 100%;
-  top: -101px;
+  top: 0px;
   background-color: rgba(0, 0, 0, 0.6);
 }
 
