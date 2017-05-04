@@ -1,14 +1,15 @@
 
 const addNewFolder = (title) => {
+  console.log(title);
   fetch('/api/v1/folders', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ title })
   })
   .then(response => response.json())
-  .then(json => console.log(json))
+  .then(json => $('.folder-div').append(`<button id=${json.id} class="folder" value="${title}">${title}</button>`))
+  .catch(error => console.log(error))
 }
-// $('.folder-div').append(`<button id=${json.id} class="folder" value="${title}">${title}</button>`)
 
 const appendFolders = (json) => {
   json.map(object => {
@@ -54,7 +55,9 @@ $('.folder-section').on('click', '.close', function () {
 })
 
 $('.folder-section').on('click', '.add-icon', function () {
+  debugger;
   const title = $('.new-folder').val()
+  console.log(title);
   title && addNewFolder(title)
   $('.new-folder').val('')
 })
