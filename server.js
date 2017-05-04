@@ -56,6 +56,7 @@ app.post('/api/v1/links', (request, response) => {
   const { long_url, folder_id } = request.body
   const short_url = md5(long_url)
   const link = { long_url, short_url, folder_id }
+  console.log(link);
 
   database('links').insert(link, ['id', 'short_url'])
     .then(link => {
