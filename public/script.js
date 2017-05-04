@@ -89,7 +89,11 @@ $('.submit').on('click', function (e) {
     body: JSON.stringify({ long_url: longUrl, folder_id: folderId })
   })
   .then(response => response.json())
-  .then(json => console.log(json))
+  .then(json => $('.links-div').append(`
+    <div id=${json.id} class="links">${longUrl}</div>
+    <div>http://localhost:3000/${json.short_url}</div>
+    `))
   .catch(error => console.log(error))
 
+  $('.link-input').val('')
 })

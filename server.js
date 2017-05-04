@@ -54,7 +54,7 @@ app.get('/api/v1/folders/:id/links', (request, response) => {
 
 app.post('/api/v1/links', (request, response) => {
   const { long_url, folder_id } = request.body
-  const short_url = md5(long_url)
+  const short_url = md5(long_url).substring(0, 5)
   const link = { long_url, short_url, folder_id }
   console.log(link);
 
