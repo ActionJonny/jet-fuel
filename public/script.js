@@ -33,6 +33,14 @@ const retrieveAllFolders = () => {
   })
 }
 
+const addCurrentFolder = (folder) => {
+  const currentFolder = folder.text()
+  const folderId = folder.attr('id')
+  $('.current').text(`${currentFolder}`)
+  $('.current').attr('id', folderId)
+}
+
+
 
 $('.current-folder').on('click', function () {
   retrieveAllFolders()
@@ -50,10 +58,14 @@ $('.folder-section').on('click', '.add-icon', function () {
   $('.new-folder').val('')
 })
 
+
 $('.folder-section').on('click', '.folder', function () {
+  $('.folder-section').fadeOut(175)
+  addCurrentFolder($(this))
+
   const folder_id = $(this).attr('id')
 
-  $('.folder-section').fadeOut(175)
+  $('.links-div').children().remove()
   fetch(`/api/v1/folders/${folder_id}/links`)
     .then(response => response.json())
     .then(json => {
