@@ -30,10 +30,17 @@ header {
   color: orange;
 }
 
-.current-folder:hover {
+.current-folder:hover,
+input[type=submit]:hover {
   background-color: orange;
   color: white;
   cursor: pointer;
+}
+
+input[type=submit]:disabled{
+  border-color: lightgrey;
+  color: lightgrey;
+  background-color: white;
 }
 
 .current {
@@ -51,7 +58,6 @@ header {
 }
 
 .folder-div {
-  /*transition: all 5s;*/
   position: absolute;
   width: 40%;
   height: 100%;
