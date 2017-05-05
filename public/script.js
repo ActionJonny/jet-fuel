@@ -43,7 +43,6 @@ const addCurrentFolder = (folder) => {
 }
 
 
-
 $('.current-folder').on('click', function () {
   retrieveAllFolders()
   $('.folder-section').fadeIn(175)
@@ -55,13 +54,11 @@ $('.folder-section').on('click', '.close', function () {
 })
 
 $('.folder-section').on('click', '.add-icon', function () {
-  debugger;
   const title = $('.new-folder').val()
   console.log(title);
   title && addNewFolder(title)
   $('.new-folder').val('')
 })
-
 
 $('.folder-section').on('click', '.folder', function () {
   $('.folder-section').fadeOut(175)
@@ -71,24 +68,50 @@ $('.folder-section').on('click', '.folder', function () {
 
   $('.links-div').children().remove()
 
-  fetch(`/api/v1/folders/${folderId}/links`)
-    .then(response => response.json())
-    .then(json => {
-      const result = removeDuplicates(json, 'links')
-      console.log(result);
-      result.map(link => $('.links-div').append(
-             `<div id=${link.id} class="links">
-               <div class="link-header">
-                 <a href='/${link.short_url}'><h3>${link.short_url}</h3></a>
-               </div>
-               <div class="link-body">
-                 <p>${link.long_url}</p>
-                 <p>${link.visits}</p>
-                 <p>${link.created_at}</p>
-               </div>
-             </div>`
-      ))
+  const result = fetchLinks(folderId)
+})
+
+const fetchLinks = (id) => {
+  fetch(`/api/v1/folders/${id}/links`)
+  .then(response => response.json())
+  .then(json => {
+    const result = removeDuplicates(json, 'links')
+    mapThroughFolderResults(result)
+  })
+}
+
+const mapThroughFolderResults = (result) => {
+  result.map(link => $('.links-div').append(
+    `<div id=${link.id} class="links">
+    <div class="link-header">
+    <a href='/${link.short_url}'><h3>${link.short_url}</h3></a>
+    </div>
+    <div class="link-body">
+    <p>${link.long_url}</p>
+    <p>${link.visits}</p>
+    <p>${link.created_at}</p>
+    </div>
+    </div>`
+  ))
+}
+
+const fetchSortByDate = () => {
+  const id = $('.current').attr('id')
+  $('.links-div').children().remove()
+  fetch(`/api/v1/folders/${id}/links`)
+  .then(response => response.json())
+  .then(json => {
+    const result = removeDuplicates(json, 'links')
+    const sorted = result.sort((obj1, obj2) => {
+      return obj2.id - obj1.id
     })
+    mapThroughFolderResults(result)
+  })
+}
+
+$('.sort-by-date').on('click', function(e) {
+  e.preventDefault()
+  fetchSortByDate()
 })
 
 $('.submit').on('click', function (e) {
