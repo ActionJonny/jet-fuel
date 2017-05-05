@@ -101,4 +101,4 @@ app.get('/api/v1/links', (request, response) => {
   })
 })
 
-module.exports = app
+module.exports = app;
