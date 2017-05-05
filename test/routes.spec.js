@@ -52,21 +52,23 @@ describe('Client Routes', () => {
 })
 
 describe('API GET routes', () => {
+
   beforeEach((done) => {
     database.migrate.latest()
     .then(() => {
-      database.seed.run()
-      .then(() => {
-        done()
-      })
+      return database.seed.run()
     })
+    .then(() => {
+      done()
+    })
+
   })
 
   afterEach((done) => {
-    // database.migrate.rollback()
-    // .then(() => {
+    database.migrate.rollback()
+    .then(() => {
       done()
-    // })
+    })
   })
 
 
@@ -130,25 +132,40 @@ describe('API GET routes', () => {
     chai.request(server)
       .get('/TESTaol')
       .end((err, response) => {
-
-        //  to test visits, we need to clear and re-seed
-
         response.should.have.status(200)
         response.should.be.html
-
-        // response.body.should.be.a('array')
-        // response.body.length.should.equal(2)
-        // response.body[0].should.have.property('folder_id')
-        // response.body[0].folder_id.should.equal(7)
-        // response.body[1].folder_id.should.equal(7)
-        // response.body[0].should.have.property('visits')
-        // response.body[0].visits.should.equal(0)
-        done()
+        response.should.redirectTo('http://www.aol.com/')
+        chai.request(server)
+          .get('/api/v1/links')
+          .end((err, response) => {
+            response.body[0].should.have.property('visits')
+            response.body[0].visits.should.equal(1)
+            done()
+        })
       })
-  })
+    })
 })
 
 describe('API POST routes', () => {
+
+  beforeEach((done) => {
+    database.migrate.latest()
+    .then(() => {
+       database.seed.run()
+       .then(() => {
+       done()
+     })
+    })
+
+  })
+
+  afterEach((done) => {
+    database.migrate.rollback()
+    .then(() => {
+      done()
+    })
+  })
+
   it('should create a new folder', (done) => {
         chai.request(server)
         .post('/api/v1/folders')
@@ -174,21 +191,36 @@ describe('API POST routes', () => {
         })
       })
 
-  // it.skip('POST /api/v1/links', (done) => {
-  //   chai.request(server)
-  //     .post('/api/v1/folders')
-  //     .send({
-  //       long_url: 'www.reddit.com',
-  //       folder_id: ,
-  //       visits: 0
-  //     })
-  //
-  //     .end((err, response) => {
-  //
-  //
-  //       done()
-  //     })
-  // })
+  it('POST /api/v1/links', (done) => {
+    chai.request(server)
+      .post('/api/v1/links')
+      .send({
+        long_url: 'www.reddit.com',
+        folder_id: 1
+      })
+      .end((err, response) => {
+        response.should.have.status(201) // Different status here
+        response.body.should.be.a('object')
+        response.body.should.have.property('short_url')
+        response.body.should.have.property('long_url')
+        response.body.long_url.should.equal('www.reddit.com')
+        response.body.should.have.property('visits')
+        response.body.visits.should.equal(0)
+        chai.request(server) // Can also test that it is actually in the database
+        .get('/api/v1/links')
+        .end((err, response) => {
+          response.should.have.status(200)
+          response.should.be.json
+          response.body.should.be.a('array')
+          response.body.length.should.equal(2)
+          response.body[1].should.have.property('long_url')
+          response.body[1].long_url.should.equal('www.reddit.com')
+          response.body[1].should.have.property('folder_id')
+          done()
+        })
+      })
+    })
+
 
   // it('POST /api/v1/folders/1/links', (done) => {
   //   chai.request(server)
