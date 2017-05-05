@@ -52,16 +52,18 @@ const fetchLinks = (id) => {
 const linkHtml = (link) => {
   const dateCreated = link.created_at
   const shortDate = dateCreated.substring(0,10)
-  return (`<div id=${link.id} class="links">
-  <div class="link-header">
-  <a href='/${link.short_url}'><h3>${link.short_url}</h3></a>
-  </div>
-  <div class="link-body">
-  <p>${link.long_url}</p>
-  <p>${link.visits}</p>
-  <p>${shortDate}</p>
-  </div>
-  </div>`)
+  return (`
+    <div id=${link.id} class="links">
+      <div class="link-header">
+        <h3>Your short url: <a href='/${link.short_url}'>${link.short_url}</a></h3>
+      </div>
+      <div class="link-body">
+        <p>Original url: ${link.long_url}</p>
+        <p>Visited: ${link.visits} times</p>
+        <p>Date created: ${shortDate}</p>
+      </div>
+    </div>
+  `)
 }
 
 const mapThroughFolderResults = (result) => {
