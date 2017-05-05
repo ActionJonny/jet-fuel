@@ -99,5 +99,6 @@ app.get('/api/v1/links', (request, response) => {
       console.log('error: ', error);
     });
   })
-
 })
+
+module.exports = app
