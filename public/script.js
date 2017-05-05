@@ -95,23 +95,28 @@ const mapThroughFolderResults = (result) => {
   ))
 }
 
-const fetchSortByDate = () => {
-  const id = $('.current').attr('id')
+const fetchSortByDate = (category) => {
+  const folderId = $('.current').attr('id')
   $('.links-div').children().remove()
-  fetch(`/api/v1/folders/${id}/links`)
+  fetch(`/api/v1/folders/${folderId}/links`)
   .then(response => response.json())
   .then(json => {
     const result = removeDuplicates(json, 'links')
     const sorted = result.sort((obj1, obj2) => {
-      return obj2.id - obj1.id
+      return obj2[category] - obj1[category]
     })
     mapThroughFolderResults(result)
   })
 }
 
+$('.sort-by-pop').on('click', (e) => {
+  e.preventDefault()
+  fetchSortByDate('visits')
+})
+
 $('.sort-by-date').on('click', function(e) {
   e.preventDefault()
-  fetchSortByDate()
+  fetchSortByDate('id')
 })
 
 $('.submit').on('click', function (e) {
