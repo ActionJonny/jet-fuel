@@ -11,43 +11,25 @@ const database = require('knex')(configuration);
 chai.use(chaiHttp)
 
 describe('before/after', () =>{
-  beforeEach((done) => {
-    database.migrate.latest()
-    .then(() => {
-      database.seed.run()
-      .then(() => {
-        done()
-      })
-    })
-  })
-
-  afterEach((done) => {
-    database.migrate.rollback()
-    .then(() => {
-      done()
-    })
-  })
+  // beforeEach((done) => {
+  //   database.migrate.latest()
+  //   .then(() => {
+  //     database.seed.run()
+  //     .then(() => {
+  //       done()
+  //     })
+  //   })
+  // })
+  //
+  // afterEach((done) => {
+  //   database.migrate.rollback()
+  //   .then(() => {
+  //     done()
+  //   })
+  // })
 })
 
-describe.skip('Client Routes', () => {
-
-  beforeEach((done) => {
-    database.migrate.latest()
-    .then(() => {
-      return database.seed.run()
-    })
-    .then(() => {
-      done()
-    })
-
-  })
-
-  afterEach((done) => {
-    database.migrate.rollback()
-    .then(() => {
-      done()
-    })
-  })
+describe('Client Routes', () => {
 
   it('should have a title of "Some URL Thing"', (done) => {
     chai.request(server)
@@ -61,20 +43,37 @@ describe.skip('Client Routes', () => {
 
   it('should return a 404 for a non existent route', (done) => {
     chai.request(server)
-    .get('/sad')
+    .get('/sad/sad')
     .end((err, response) => {
-      response.shoud.have.status(404)
+      response.should.have.status(404)
       done()
     })
   })
 })
 
-describe('API routes', () => {
+describe('API GET routes', () => {
+  beforeEach((done) => {
+    database.migrate.latest()
+    .then(() => {
+      database.seed.run()
+      .then(() => {
+        done()
+      })
+    })
+  })
+
+  afterEach((done) => {
+    // database.migrate.rollback()
+    // .then(() => {
+      done()
+    // })
+  })
+
+
   it('GET /api/v1/folders', (done) => {
     chai.request(server)
       .get('/api/v1/folders')
       .end((err, response) => {
-        console.log(response.body);
         response.should.have.status(200)
         response.should.be.json
         response.body.should.be.a('array')
@@ -131,12 +130,12 @@ describe('API routes', () => {
     chai.request(server)
       .get('/TESTaol')
       .end((err, response) => {
-        console.log(response.body);
 
         //  to test visits, we need to clear and re-seed
 
         response.should.have.status(200)
         response.should.be.html
+
         // response.body.should.be.a('array')
         // response.body.length.should.equal(2)
         // response.body[0].should.have.property('folder_id')
@@ -149,6 +148,64 @@ describe('API routes', () => {
   })
 })
 
+describe('API POST routes', () => {
+  it('should create a new folder', (done) => {
+        chai.request(server)
+        .post('/api/v1/folders')
+        .send({
+          title: 'New Folder'
+        })
+        .end((err, response) => {
+          response.should.have.status(201) // Different status here
+          response.body.should.be.a('object')
+          response.body.should.have.property('id')
+          chai.request(server) // Can also test that it is actually in the database
+          .get('/api/v1/folders')
+          .end((err, response) => {
+            response.should.have.status(200)
+            response.should.be.json
+            response.body.should.be.a('array')
+            response.body.length.should.equal(2)
+            response.body[1].should.have.property('title')
+            response.body[1].title.should.equal('New Folder')
+            response.body[1].should.have.property('id')
+            done()
+          })
+        })
+      })
 
-// /:short_url
-// '/api/v1/folders/:id/links'
+  // it.skip('POST /api/v1/links', (done) => {
+  //   chai.request(server)
+  //     .post('/api/v1/folders')
+  //     .send({
+  //       long_url: 'www.reddit.com',
+  //       folder_id: ,
+  //       visits: 0
+  //     })
+  //
+  //     .end((err, response) => {
+  //
+  //
+  //       done()
+  //     })
+  // })
+
+  // it('POST /api/v1/folders/1/links', (done) => {
+  //   chai.request(server)
+  //     .get('/api/v1/folders/1/links')
+  //     .end((err, response) => {
+  //
+  //
+  //       done()
+  //     })
+  // })
+  //
+  // it('POST /aol', (done) => {
+  //   chai.request(server)
+  //     .get('/TESTaol')
+  //     .end((err, response) => {
+  //
+  //       done()
+  //     })
+  // })
+})
