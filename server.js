@@ -3,7 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const md5 = require('md5')
 
-const environment = 'development';
+const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment]
 const database = require('knex')(configuration)
 
@@ -15,6 +15,7 @@ app.set('port', process.env.PORT || 3000)
 
 app.listen(app.get('port'), () => {
   console.log(`port is running on ${app.get('port')}.`)
+  })
 
     /*************  GET requests  **************/
 
@@ -99,6 +100,6 @@ app.get('/api/v1/links', (request, response) => {
       console.log('error: ', error);
     });
   })
-})
+
 
 module.exports = app;
