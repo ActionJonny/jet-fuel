@@ -74,10 +74,11 @@ describe('API routes', () => {
     chai.request(server)
       .get('/api/v1/folders')
       .end((err, response) => {
+        console.log(response.body);
         response.should.have.status(200)
         response.should.be.json
         response.body.should.be.a('array')
-        response.body.length.should.equal(2)
+        response.body.length.should.equal(1)
         response.body[0].should.have.property('title')
         response.body[0].title.should.equal('AOL')
         response.body[0].should.have.property('id')
@@ -94,11 +95,11 @@ describe('API routes', () => {
         response.should.have.status(200)
         response.should.be.json
         response.body.should.be.a('array')
-        response.body.length.should.equal(4)
+        response.body.length.should.equal(1)
         response.body[0].should.have.property('short_url')
         response.body[0].short_url.should.equal('TESTaol')
         response.body[0].should.have.property('id')
-        response.body[0].id.should.equal(1)
+        response.body[0].id.should.equal(2)
         response.body[0].should.have.property('long_url')
         response.body[0].long_url.should.equal('www.aol.com')
         response.body[0].should.have.property('folder_id')
@@ -117,10 +118,9 @@ describe('API routes', () => {
         response.should.have.status(200)
         response.should.be.json
         response.body.should.be.a('array')
-        response.body.length.should.equal(2)
+        response.body.length.should.equal(1)
         response.body[0].should.have.property('folder_id')
         response.body[0].folder_id.should.equal(1)
-        response.body[1].folder_id.should.equal(1)
         response.body[0].should.have.property('visits')
         response.body[0].visits.should.equal(0)
         done()
@@ -129,7 +129,7 @@ describe('API routes', () => {
 
   it('GET /aol', (done) => {
     chai.request(server)
-      .get('/aol')
+      .get('/TESTaol')
       .end((err, response) => {
         console.log(response.body);
 
