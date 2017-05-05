@@ -49,22 +49,26 @@ const fetchLinks = (id) => {
   })
 }
 
-const mapThroughFolderResults = (result) => {
-  result.map(link => $('.links-div').append(`
-    <div id=${link.id} class="links">
-      <div class="link-header">
-        <h3>Your Short URL: <a href='/${link.short_url}'>${link.short_url}</a></h3>
-      </div>
-      <div class="link-body">
-        <p>Full URL: ${link.long_url}</p>
-        <p>Times Visited: ${link.visits}</p>
-        <p>Date Created: ${link.created_at}</p>
-      </div>
-    </div>
-  `))
+const linkHtml = (link) => {
+  const dateCreated = link.created_at
+  const shortDate = dateCreated.substring(0,10)
+  return (`<div id=${link.id} class="links">
+  <div class="link-header">
+  <a href='/${link.short_url}'><h3>${link.short_url}</h3></a>
+  </div>
+  <div class="link-body">
+  <p>${link.long_url}</p>
+  <p>${link.visits}</p>
+  <p>${shortDate}</p>
+  </div>
+  </div>`)
 }
 
-const fetchSortByDate = (category) => {
+const mapThroughFolderResults = (result) => {
+  result.map(link => $('.links-div').append(linkHtml(link)))
+}
+
+const fetchSortByCategory = (category) => {
   const folderId = $('.current').attr('id')
   $('.links-div').children().remove()
   fetch(`/api/v1/folders/${folderId}/links`)
@@ -106,12 +110,12 @@ $('.folder-section').on('click', '.folder', function () {
 
 $('.sort-by-pop').on('click', (e) => {
   e.preventDefault()
-  fetchSortByDate('visits')
+  fetchSortByCategory('visits')
 })
 
 $('.sort-by-date').on('click', function(e) {
   e.preventDefault()
-  fetchSortByDate('id')
+  fetchSortByCategory('id')
 })
 
 $('.submit').on('click', function (e) {
@@ -125,18 +129,7 @@ $('.submit').on('click', function (e) {
     body: JSON.stringify({ long_url: longUrl, folder_id: folderId })
   })
   .then(response => response.json())
-  .then(link => $('.links-div').append(
-    `<div id=${link.id} class="links">
-      <div class="link-header">
-        <h3>Your Short URL: <a href='/${link.short_url}'>${link.short_url}</a></h3>
-      </div>
-      <div class="link-body">
-        <p>Full URL: ${link.long_url}</p>
-        <p>Times Visited: ${link.visits}</p>
-        <p>Date Created: ${link.created_at}</p>
-      </div>
-    </div>`
-  ))
+  .then(link => $('.links-div').append(linkHtml(link)))
   .catch(error => console.log(error))
 
   $('.link-input').val('')
