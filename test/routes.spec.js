@@ -14,10 +14,10 @@ describe('before/after', () =>{
   beforeEach((done) => {
     database.migrate.latest()
     .then(() => {
-      return database.seed.run()
-    })
-    .then(() => {
-      done()
+      database.seed.run()
+      .then(() => {
+        done()
+      })
     })
   })
 
