@@ -1,4 +1,3 @@
-
 const addNewFolder = (title) => {
   fetch('/api/v1/folders', {
     method: 'POST',
@@ -83,11 +82,9 @@ const fetchSortByCategory = (category) => {
   })
 }
 
-
 $('.current-folder').on('click', function () {
   retrieveAllFolders()
   $('.folder-section').fadeIn(175)
-
 })
 
 $('.folder-section').on('click', '.close', function () {
@@ -96,7 +93,6 @@ $('.folder-section').on('click', '.close', function () {
 
 $('.folder-section').on('click', '.add-icon', function () {
   const title = $('.new-folder').val()
-  console.log(title);
   title && addNewFolder(title)
   $('.new-folder').val('')
 })
@@ -122,13 +118,10 @@ $('.sort-by-date').on('click', function(e) {
   fetchSortByCategory('id')
 })
 
-
-
 $('.submit').on('click', function (e) {
   e.preventDefault()
   const folderId = $('.current').attr('id')
   const longUrl = $('.link-input').val()
-  console.log(longUrl, folderId);
 
   fetch('/api/v1/links', {
     method: 'POST',
