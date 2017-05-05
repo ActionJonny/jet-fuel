@@ -1,6 +1,4 @@
-
 const addNewFolder = (title) => {
-  console.log(title);
   fetch('/api/v1/folders', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -52,18 +50,18 @@ const fetchLinks = (id) => {
 }
 
 const mapThroughFolderResults = (result) => {
-  result.map(link => $('.links-div').append(
-    `<div id=${link.id} class="links">
-    <div class="link-header">
-    <a href='/${link.short_url}'><h3>${link.short_url}</h3></a>
+  result.map(link => $('.links-div').append(`
+    <div id=${link.id} class="links">
+      <div class="link-header">
+        <h3>Your Short URL: <a href='/${link.short_url}'>${link.short_url}</a></h3>
+      </div>
+      <div class="link-body">
+        <p>Full URL: ${link.long_url}</p>
+        <p>Times Visited: ${link.visits}</p>
+        <p>Date Created: ${link.created_at}</p>
+      </div>
     </div>
-    <div class="link-body">
-    <p>${link.long_url}</p>
-    <p>${link.visits}</p>
-    <p>${link.created_at}</p>
-    </div>
-    </div>`
-  ))
+  `))
 }
 
 const fetchSortByDate = (category) => {
@@ -80,13 +78,9 @@ const fetchSortByDate = (category) => {
   })
 }
 
-
-
-
 $('.current-folder').on('click', function () {
   retrieveAllFolders()
   $('.folder-section').fadeIn(175)
-
 })
 
 $('.folder-section').on('click', '.close', function () {
@@ -95,7 +89,6 @@ $('.folder-section').on('click', '.close', function () {
 
 $('.folder-section').on('click', '.add-icon', function () {
   const title = $('.new-folder').val()
-  console.log(title);
   title && addNewFolder(title)
   $('.new-folder').val('')
 })
@@ -125,8 +118,6 @@ $('.submit').on('click', function (e) {
   e.preventDefault()
   const folderId = $('.current').attr('id')
   const longUrl = $('.link-input').val()
-  isUrlValid(longUrl)
-  console.log(longUrl, folderId);
 
   fetch('/api/v1/links', {
     method: 'POST',
@@ -137,12 +128,12 @@ $('.submit').on('click', function (e) {
   .then(link => $('.links-div').append(
     `<div id=${link.id} class="links">
       <div class="link-header">
-        <a href='/${link.short_url}'><h3>${link.short_url}</h3></a>
+        <h3>Your Short URL: <a href='/${link.short_url}'>${link.short_url}</a></h3>
       </div>
       <div class="link-body">
-        <p>${link.long_url}</p>
-        <p>${link.visits}</p>
-        <p>${link.created_at}</p>
+        <p>Full URL: ${link.long_url}</p>
+        <p>Times Visited: ${link.visits}</p>
+        <p>Date Created: ${link.created_at}</p>
       </div>
     </div>`
   ))

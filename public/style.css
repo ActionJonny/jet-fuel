@@ -2,6 +2,7 @@ html, body {
   height: 100%;
   text-align: center;
   margin: 0;
+  font-family: 'Jura', sans-serif;
 }
 
 header {
@@ -33,6 +34,11 @@ header {
   background-color: orange;
   color: white;
   cursor: pointer;
+}
+
+.current {
+  font-size: 24px;
+  color: #464646;
 }
 
 .folder-section{
@@ -112,4 +118,35 @@ label {
 
 .new-folder:focus + span {
   width: calc(250px);
+}
+
+.links-div {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.links {
+  border: 3px solid #f28c48;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 10px;
+  color: #464646;
+}
+
+.link-input {
+  width: 200px;
+  height: 30px;
+  text-indent: 5px;
+}
+
+.submit, .sort-by-date, .sort-by-pop {
+  width: 125px;
+  height: 35px;
+  border-radius: 10px;
+  background-color: white;
+  border: 3px solid orange;
+  font-size: 12px;
+  color: orange;
+  margin: 20px 20px;
 }
