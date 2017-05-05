@@ -10,25 +10,6 @@ const database = require('knex')(configuration);
 
 chai.use(chaiHttp)
 
-describe('before/after', () =>{
-  // beforeEach((done) => {
-  //   database.migrate.latest()
-  //   .then(() => {
-  //     database.seed.run()
-  //     .then(() => {
-  //       done()
-  //     })
-  //   })
-  // })
-  //
-  // afterEach((done) => {
-  //   database.migrate.rollback()
-  //   .then(() => {
-  //     done()
-  //   })
-  // })
-})
-
 describe('Client Routes', () => {
 
   it('should have a title of "Some URL Thing"', (done) => {
@@ -173,10 +154,10 @@ describe('API POST routes', () => {
           title: 'New Folder'
         })
         .end((err, response) => {
-          response.should.have.status(201) // Different status here
+          response.should.have.status(201)
           response.body.should.be.a('object')
           response.body.should.have.property('id')
-          chai.request(server) // Can also test that it is actually in the database
+          chai.request(server)
           .get('/api/v1/folders')
           .end((err, response) => {
             response.should.have.status(200)
@@ -191,7 +172,7 @@ describe('API POST routes', () => {
         })
       })
 
-  it('POST /api/v1/links', (done) => {
+  it('should create a new link', (done) => {
     chai.request(server)
       .post('/api/v1/links')
       .send({
@@ -199,26 +180,26 @@ describe('API POST routes', () => {
         folder_id: 1
       })
       .end((err, response) => {
-        response.should.have.status(201) // Different status here
+        response.should.have.status(201)
         response.body.should.be.a('object')
         response.body.should.have.property('short_url')
         response.body.should.have.property('long_url')
         response.body.long_url.should.equal('www.reddit.com')
         response.body.should.have.property('visits')
         response.body.visits.should.equal(0)
-        chai.request(server) // Can also test that it is actually in the database
-        .get('/api/v1/links')
-        .end((err, response) => {
-          response.should.have.status(200)
-          response.should.be.json
-          response.body.should.be.a('array')
-          response.body.length.should.equal(2)
-          response.body[1].should.have.property('long_url')
-          response.body[1].long_url.should.equal('www.reddit.com')
-          response.body[1].should.have.property('folder_id')
-          done()
+        chai.request(server)
+          .get('/api/v1/links')
+          .end((err, response) => {
+            response.should.have.status(200)
+            response.should.be.json
+            response.body.should.be.a('array')
+            response.body.length.should.equal(2)
+            response.body[1].should.have.property('long_url')
+            response.body[1].long_url.should.equal('www.reddit.com')
+            response.body[1].should.have.property('folder_id')
+            done()
+          })
         })
-      })
     })
 
 
