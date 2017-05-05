@@ -9,8 +9,8 @@ exports.seed = function(knex, Promise) {
         }, 'id')
         .then(folder => {
           return knex('links').insert([
-            { short_url: "google", long_url: "www.google.com", folder_id: folder[0] },
-            { short_url: "ESPN", long_url: "www.espn.com", folder_id: folder[0]}
+            { short_url: "google", long_url: "www.google.com", folder_id: folder[0], visits:0 },
+            { short_url: "ESPN", long_url: "www.espn.com", folder_id: folder[0], visits:0 }
           ])
         }),
         knex('folders').insert({
@@ -18,8 +18,8 @@ exports.seed = function(knex, Promise) {
         }, 'id')
         .then(folder => {
           return knex('links').insert([
-            { short_url: "aol", long_url: "www.aol.com", folder_id: folder[0] },
-            { short_url: "something", long_url: "www.something.com", folder_id: folder[0]}
+            { short_url: "aol", long_url: "www.aol.com", folder_id: folder[0], visits:0  },
+            { short_url: "something", long_url: "www.something.com", folder_id: folder[0], visits:0 }
           ])
         })
       ])
