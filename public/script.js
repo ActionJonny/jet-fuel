@@ -42,35 +42,6 @@ const addCurrentFolder = (folder) => {
   $('.current').attr('id', folderId)
 }
 
-
-$('.current-folder').on('click', function () {
-  retrieveAllFolders()
-  $('.folder-section').fadeIn(175)
-
-})
-
-$('.folder-section').on('click', '.close', function () {
-  $('.folder-section').fadeOut(175)
-})
-
-$('.folder-section').on('click', '.add-icon', function () {
-  const title = $('.new-folder').val()
-  console.log(title);
-  title && addNewFolder(title)
-  $('.new-folder').val('')
-})
-
-$('.folder-section').on('click', '.folder', function () {
-  $('.folder-section').fadeOut(175)
-  addCurrentFolder($(this))
-
-  const folderId = $(this).attr('id')
-
-  $('.links-div').children().remove()
-
-  const result = fetchLinks(folderId)
-})
-
 const fetchLinks = (id) => {
   fetch(`/api/v1/folders/${id}/links`)
   .then(response => response.json())
@@ -109,6 +80,37 @@ const fetchSortByDate = (category) => {
   })
 }
 
+
+
+
+$('.current-folder').on('click', function () {
+  retrieveAllFolders()
+  $('.folder-section').fadeIn(175)
+
+})
+
+$('.folder-section').on('click', '.close', function () {
+  $('.folder-section').fadeOut(175)
+})
+
+$('.folder-section').on('click', '.add-icon', function () {
+  const title = $('.new-folder').val()
+  console.log(title);
+  title && addNewFolder(title)
+  $('.new-folder').val('')
+})
+
+$('.folder-section').on('click', '.folder', function () {
+  $('.folder-section').fadeOut(175)
+  addCurrentFolder($(this))
+
+  const folderId = $(this).attr('id')
+
+  $('.links-div').children().remove()
+
+  const result = fetchLinks(folderId)
+})
+
 $('.sort-by-pop').on('click', (e) => {
   e.preventDefault()
   fetchSortByDate('visits')
@@ -123,6 +125,7 @@ $('.submit').on('click', function (e) {
   e.preventDefault()
   const folderId = $('.current').attr('id')
   const longUrl = $('.link-input').val()
+  isUrlValid(longUrl)
   console.log(longUrl, folderId);
 
   fetch('/api/v1/links', {
@@ -146,4 +149,9 @@ $('.submit').on('click', function (e) {
   .catch(error => console.log(error))
 
   $('.link-input').val('')
+})
+
+
+$('.link-input').on('keyup', function () {
+  $('.current').attr('id') && $('.submit').prop('disabled', false)
 })
