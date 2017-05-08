@@ -69,7 +69,7 @@ describe.skip('Client Routes', () => {
   })
 })
 
-describe('API routes', () => {
+describe.skip('API routes', () => {
   it('GET /api/v1/folders', (done) => {
     chai.request(server)
       .get('/api/v1/folders')
