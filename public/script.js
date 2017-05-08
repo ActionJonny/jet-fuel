@@ -102,12 +102,11 @@ $('.folder-section').on('click', '.add-icon', function () {
 $('.folder-section').on('click', '.folder', function () {
   $('.folder-section').fadeOut(175)
   addCurrentFolder($(this))
-
   const folderId = $(this).attr('id')
-
   $('.links-div').children().remove()
-
   const result = fetchLinks(folderId)
+
+  $('.current').attr('id') && $('.sort').prop('disabled', false)
 })
 
 $('.sort-by-pop').on('click', (e) => {
@@ -137,7 +136,6 @@ $('.submit').on('click', function (e) {
   $('.link-input').val('')
 })
 
-
 $('.link-input').on('keyup', function () {
-  $('.current').attr('id') && $('.submit').prop('disabled', false)
+  $('.link-input').val() ? $('.submit').prop('disabled', false) : $('.submit').prop('disabled', true)
 })
