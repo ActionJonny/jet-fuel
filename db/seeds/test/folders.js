@@ -10,7 +10,7 @@ exports.seed = function(knex, Promise) {
         }, 'id')
         .then(folder => {
           return knex('links').insert([
-            { short_url: "TESTaol", long_url: "www.aol.com", folder_id: 1, visits:0, id:2  },
+            { short_url: "TESTaol", long_url: "www.aol.com", visits:0, id:2  },
           ])
         })
       ])
