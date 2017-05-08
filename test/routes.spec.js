@@ -11,7 +11,7 @@ const database = require('knex')(configuration);
 
 chai.use(chaiHttp)
 
-describe.skip('Client Routes', () => {
+describe('Client Routes', () => {
 
   it('should have a title of "Some URL Thing"', (done) => {
     chai.request(server)
@@ -33,7 +33,7 @@ describe.skip('Client Routes', () => {
   })
 })
 
-describe.skip('API GET routes', () => {
+describe('API GET routes', () => {
 
   beforeEach((done) => {
     database.migrate.latest()
@@ -128,7 +128,7 @@ describe.skip('API GET routes', () => {
     })
 })
 
-describe.skip('API POST routes', () => {
+describe('API POST routes', () => {
 
   beforeEach((done) => {
     database.migrate.latest()
