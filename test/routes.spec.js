@@ -146,7 +146,7 @@ describe.skip('API POST routes', () => {
     .then(() => {
       done()
     })
-  })g
+  })
 
   it('should create a new folder', (done) => {
         chai.request(server)
