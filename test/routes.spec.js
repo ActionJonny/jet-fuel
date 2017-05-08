@@ -152,8 +152,7 @@ describe('API POST routes', () => {
         chai.request(server)
         .post('/api/v1/folders')
         .send({
-          title: 'New Folder',
-          id: 1
+          title: 'New Folder'
         })
         .end((err, response) => {
           response.should.have.status(201)
