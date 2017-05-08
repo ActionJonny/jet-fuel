@@ -54,7 +54,7 @@ describe('API GET routes', () => {
   })
 
 
-  it('GET /api/v1/folders', (done) => {
+  it.skip('GET /api/v1/folders', (done) => {
     chai.request(server)
       .get('/api/v1/folders')
       .end((err, response) => {
@@ -71,7 +71,7 @@ describe('API GET routes', () => {
       })
   })
 
-  it('GET /api/v1/links', (done) => {
+  it.skip('GET /api/v1/links', (done) => {
     chai.request(server)
       .get('/api/v1/links')
       .end((err, response) => {
@@ -94,7 +94,7 @@ describe('API GET routes', () => {
       })
   })
 
-  it('GET /api/v1/folders/1/links', (done) => {
+  it.skip('GET /api/v1/folders/1/links', (done) => {
     chai.request(server)
       .get('/api/v1/folders/1/links')
       .end((err, response) => {
@@ -110,7 +110,7 @@ describe('API GET routes', () => {
       })
   })
 
-  it('GET /aol', (done) => {
+  it.skip('GET /aol', (done) => {
     chai.request(server)
       .get('/TESTaol')
       .end((err, response) => {
@@ -148,7 +148,7 @@ describe('API POST routes', () => {
     })
   })
 
-  it('should create a new folder', (done) => {
+  it.skip('should create a new folder', (done) => {
         chai.request(server)
         .post('/api/v1/folders')
         .send({
@@ -173,7 +173,7 @@ describe('API POST routes', () => {
         })
       })
 
-  it('should create a new link', (done) => {
+  it.skip('should create a new link', (done) => {
     chai.request(server)
       .post('/api/v1/links')
       .send({
@@ -204,7 +204,7 @@ describe('API POST routes', () => {
     })
 
 
-  // it('POST /api/v1/folders/1/links', (done) => {
+  // it.skip('POST /api/v1/folders/1/links', (done) => {
   //   chai.request(server)
   //     .get('/api/v1/folders/1/links')
   //     .end((err, response) => {
