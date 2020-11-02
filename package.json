@@ -1,10 +1,9 @@
 {
   "name": "jet-fuel",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha",
+    "test": "mocha",
     "start": "nodemon"
   },
   "repository": {
@@ -18,15 +17,27 @@
     "url": "https://github.com/ActionJonny/jet-fuel/issues"
   },
   "dependencies": {
-    "body-parser": "^1.17.1",
-    "express": "^4.15.2",
-    "knex": "^0.13.0",
-    "md5": "^2.2.1",
-    "pg": "^6.1.5"
+    "body-parser": "^1.19.0",
+    "eslint": "^7.12.1",
+    "express": "^4.17.1",
+    "extend": "^3.0.2",
+    "knex": "^0.21.8",
+    "md5": "^2.3.0",
+    "node": "^15.0.1",
+    "pg": "^8.4.2"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "chai-http": "^3.0.0",
-    "mocha": "^3.3.0"
-  }
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "mocha": "^8.2.0"
+  },
+  "engines": {
+     "node": "^15.0.1"
+  },
+  "homepage": "https://github.com/ActionJonny/jet-fuel#readme",
+  "directories": {
+    "test": "test"
+  },
+  "description": ""
 }
