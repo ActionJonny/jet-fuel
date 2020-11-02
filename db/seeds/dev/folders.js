@@ -1,27 +1,39 @@
+const folderTestData = require('../../../folderTestData');
 
-exports.seed = function(knex, Promise) {
-  return knex('links').del()
-    .then(() => knex('folders').del())
-    .then(() => {
-      return Promise.all([
-        knex('folders').insert({
-          title: 'Google'
-        }, 'id')
-        .then(folder => {
-          return knex('links').insert([
-            { short_url: "google", long_url: "www.google.com", folder_id: folder[0], visits:0 },
-            { short_url: "ESPN", long_url: "www.espn.com", folder_id: folder[0], visits:0 }
-          ])
-        }),
-        knex('folders').insert({
-          title: 'AOL'
-        }, 'id')
-        .then(folder => {
-          return knex('links').insert([
-            { short_url: "aol", long_url: "www.aol.com", folder_id: folder[0], visits:0  },
-            { short_url: "something", long_url: "www.something.com", folder_id: folder[0], visits:0 }
-          ])
-        })
-      ])
-    })
+const createFolders = async (knex, folder) => {
+  const folderId = await knex('folders').insert({
+    title: folder.title,
+    id: folder.id
+  }, 'id');
+
+  let linksPromises = folder.links.map(link => {
+    return createLink(knex, {
+      short_url: link.short_url,
+      long_url: link.long_url,
+      folder_id: folderId[0],
+      visits: link.visits,
+      id: link.id
+    });
+  });
+
+  return Promise.all(linksPromises);
+};
+
+const createLink = (knex, link) => {
+  return knex('links').insert(link);
+};
+
+exports.seed = async (knex) => {
+  try {
+    await knex('links').del();
+    await knex('folders').del();
+
+    let folderPromises = folderTestData.map(folder => {
+      return createFolders(knex, folder);
+    });
+
+    return Promise.all(folderPromises);
+  } catch (error) {
+    console.log(`Error seeding data: ${error}`);
+  };
 };

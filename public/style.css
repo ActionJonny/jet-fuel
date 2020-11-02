@@ -37,7 +37,7 @@ input[type=submit]:hover {
   cursor: pointer;
 }
 
-input[type=submit]:disabled{
+input[type=submit]:disabled {
   border-color: lightgrey;
   color: lightgrey;
   background-color: white;
@@ -48,7 +48,7 @@ input[type=submit]:disabled{
   color: #464646;
 }
 
-.folder-section{
+.folder-section {
   display: none;
   position: absolute;
   height: 100%;
@@ -65,7 +65,7 @@ input[type=submit]:disabled{
   background-color: white;
 }
 
-.folders-header{
+.folders-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -92,15 +92,15 @@ input[type=submit]:disabled{
   width: 100%;
 }
 
-.folder:hover{
+.folder:hover {
   cursor: pointer;
 }
 
-.add-icon{
+.add-icon {
   height: 17px;
 }
 
-.close{
+.close {
   height: 21px;
 }
 
@@ -108,7 +108,7 @@ label {
   margin: 0 16px;
 }
 
-.new-folder{
+.new-folder {
   padding: 4px 0;
   width: 250px;
   outline: none;
@@ -146,7 +146,7 @@ label {
   text-indent: 5px;
 }
 
-.submit, .sort-by-date, .sort-by-pop {
+.submit, .sort-by-date, .sort-by-pop, .remove-card {
   width: 125px;
   height: 35px;
   border-radius: 10px;

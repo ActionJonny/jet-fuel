@@ -1,9 +1,10 @@
 const express = require('express')
-const app = express()
 const bodyParser = require('body-parser')
 const md5 = require('md5')
 
-const environment = process.env.NODE_ENV || 'development';
+const app = express()
+
+const environment = process.env.NODE_ENV || 'development'
 const configuration = require('./knexfile')[environment]
 const database = require('knex')(configuration)
 
@@ -15,7 +16,7 @@ app.set('port', process.env.PORT || 3000)
 
 app.listen(app.get('port'), () => {
   console.log(`port is running on ${app.get('port')}.`)
-  })
+})
 
     /*************  GET requests  **************/
 
@@ -46,7 +47,7 @@ app.get('/api/v1/folders', (request, response) => {
     })
     .catch(error => {
       console.error('error: ', error)
-    });
+    })
 })
 
 app.get('/api/v1/folders/:id/links', (request, response) => {
@@ -56,7 +57,7 @@ app.get('/api/v1/folders/:id/links', (request, response) => {
     })
     .catch(error => {
       console.error('error: ', error)
-    });
+    })
 })
 
 app.get('/api/v1/links', (request, response) => {
@@ -76,11 +77,9 @@ app.post('/api/v1/links', (request, response) => {
   const { long_url, folder_id } = request.body
   const short_url = md5(long_url).substring(0, 5)
   const link = { long_url, short_url, folder_id, visits: 0 }
-  console.log(link);
 
   database('links').insert(link, ['id', 'short_url', 'created_at', 'long_url', 'visits'])
   .then(link => {
-    console.log('link: ', link);
     response.status(201).json(...link)
   })
   .catch(error => {
@@ -88,18 +87,35 @@ app.post('/api/v1/links', (request, response) => {
   })
 })
 
+// app.post('/api/v1/links', async (request, response) => {
+//   const { long_url, folder_id } = request.body
+//   const short_url = md5(long_url).substring(0, 5)
+//   const link = { long_url, short_url, folder_id, visits: 0 }
+//
+//
+// })
+
 app.post('/api/v1/folders', (request, response) => {
   const folder = request.body
 
   database('folders').insert(folder, 'id')
   .then(folder => {
-    console.log('folder: ', folder);
     response.status(201).json({ id: folder[0] })
   })
   .catch(error => {
-    console.log('error: ', error);
-  });
+    console.error('error: ', error)
+  })
 })
 
+  /*************  DELETE requests  **************/
 
-module.exports = app;
+app.delete('/api/v1/links/:id', async (request, response) => {
+  try {
+    const link = await database('links').where('id', request.params.id).delete()
+    response.status(200).send(`The link was removed from your folder.`)
+  } catch (error) {
+    response.status(404).send('We were not able to delete that link')
+  }
+})
+
+module.exports = app

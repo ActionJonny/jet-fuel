@@ -35,15 +35,15 @@ module.exports = {
       directory: './db/seeds/dev'
     }
   },
-  test: {
-    client: 'pg',
-    connection: process.env.DATABASE_URL || 'postgres://localhost/testdb',
-    migrations: {
-      directory: './db/migrations'
-    },
-    seeds: {
-      directory: './db/seeds/test'
-    },
-    useNullAsDefault: true
-  }
+  // test: {
+  //   client: 'pg',
+  //   connection: process.env.DATABASE_URL || 'postgres://localhost/testdb',
+  //   migrations: {
+  //     directory: './db/migrations'
+  //   },
+  //   seeds: {
+  //     directory: './db/seeds/test'
+  //   },
+  //   useNullAsDefault: true
+  // }
 };
