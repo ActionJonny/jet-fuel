@@ -22,6 +22,7 @@
     "express": "^4.17.1",
     "extend": "^3.0.2",
     "knex": "^0.21.8",
+    "lodash": "^4.17.20",
     "md5": "^2.3.0",
     "node": "^15.0.1",
     "pg": "^8.4.2"
@@ -33,7 +34,7 @@
     "mocha": "^8.2.0"
   },
   "engines": {
-     "node": "^15.0.1"
+    "node": "^15.0.1"
   },
   "homepage": "https://github.com/ActionJonny/jet-fuel#readme",
   "directories": {
