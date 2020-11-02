@@ -1,18 +1,16 @@
 
-exports.up = function(knex, Promise) {
-  return Promise.all([
-    knex.schema.table('links', (table) => {
+exports.up = function (knex) {
+  return knex.schema
+    .table('links', function (table) {
       table.timestamps(true, true)
       table.dropColumn('date_added')
     })
-  ])
 };
 
-exports.down = function(knex, Promise) {
-  return Promise.all([
-    knex.schema.table('links', (table) => {
-      table.dropTimestamps()
+exports.down = function (knex) {
+  return knex.schema
+    .table('links', function (table) {
       table.date('date_added')
+      table.dropTimestamps()
     })
-  ])
 };

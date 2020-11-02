@@ -2,11 +2,11 @@ const addNewFolder = (title) => {
   fetch('/api/v1/folders', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title })
+    body: JSON.stringify({ title }),
   })
-  .then(response => response.json())
-  .then(json => $('.folder-div').append(`<button id=${json.id} class="folder" value="${title}">${title}</button>`))
-  .catch(error => console.log(error))
+    .then((response) => response.json())
+    .then((json) => $('.folder-div').append(`<button id=${json.id} class="folder" value="${title}">${title}</button>`))
+    .catch((error) => console.log(error))
 }
 
 const appendFolders = (json) => {
@@ -62,6 +62,7 @@ const linkHtml = (link) => {
         <p>Visited: ${link.visits} times</p>
         <p>Date created: ${shortDate}</p>
       </div>
+      <button class="remove-card">Remove Card</button>
     </div>
   `)
 }
@@ -84,6 +85,14 @@ const fetchSortByCategory = (category) => {
   })
 }
 
+const checkIfUserInputIsURL = url => {
+  let checkArr = ['.com', '.edu', '.gov', '.org', '.net', '.io'];
+  return checkArr.reduce((acc, current) => {
+    url.includes(current) ? acc = true : null;
+    return acc
+  }, '')
+}
+
 $('.current-folder').on('click', function () {
   retrieveAllFolders()
   $('.folder-section').fadeIn(175)
@@ -97,6 +106,14 @@ $('.folder-section').on('click', '.add-icon', function () {
   const title = $('.new-folder').val()
   title && addNewFolder(title)
   $('.new-folder').val('')
+})
+
+$('.folder-section').on('keyup', '.new-folder', function () {
+  const title = $('.new-folder').val()
+  if (event.keyCode === 13) {
+    title && addNewFolder(title)
+    $('.new-folder').val('')
+  }
 })
 
 $('.folder-section').on('click', '.folder', function () {
@@ -123,17 +140,31 @@ $('.submit').on('click', function (e) {
   e.preventDefault()
   const folderId = $('.current').attr('id')
   const longUrl = $('.link-input').val()
+  if (checkIfUserInputIsURL(longUrl)) {
+    fetch('/api/v1/links', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ long_url: longUrl, folder_id: folderId })
+    })
+    .then(response => response.json())
+    .then(link => $('.links-div').append(linkHtml(link)))
+    .catch(error => console.log(error))
 
-  fetch('/api/v1/links', {
-    method: 'POST',
+    $('.link-input').val('')
+  }
+  // write error about missing data
+  // probably should be server side with a 422 missing data
+})
+
+$('.links-div').on('click', '.links', async function () {
+  const folderId = $(this).attr('id')
+
+  const response = await fetch(`/api/v1/links/${folderId}`, {
+    method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ long_url: longUrl, folder_id: folderId })
   })
-  .then(response => response.json())
-  .then(link => $('.links-div').append(linkHtml(link)))
-  .catch(error => console.log(error))
 
-  $('.link-input').val('')
+  $(this).remove()
 })
 
 $('.link-input').on('keyup', function () {
