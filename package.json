@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha --exit",
-    "start": "nodemon"
+    "start": "nodemon",
+    "build": "node --trace-deprecation"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,8 @@
     "knex": "^0.21.8",
     "lodash": "^4.17.20",
     "md5": "^2.3.0",
-    "pg": "^8.4.2",
-    "npm": "6.14.6"
+    "npm": "6.14.6",
+    "pg": "^8.4.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",
