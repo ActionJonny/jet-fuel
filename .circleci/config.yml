@@ -11,5 +11,5 @@ jobs:
       - node/with-cache:
           steps:
             - run: npm install
-            - run: npm update
+            - run: knex migrate:latest
       - run: npm run test
