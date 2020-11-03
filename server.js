@@ -14,10 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.set('port', process.env.PORT || 3000)
 
-app.listen(app.get('port'), () => {
-  console.log(`port is running on ${app.get('port')}.`)
-})
-
     /*************  GET requests  **************/
 
 app.get('/', (request, response) => {
@@ -116,6 +112,10 @@ app.delete('/api/v1/links/:id', async (request, response) => {
   } catch (error) {
     response.status(404).send('We were not able to delete that link')
   }
+})
+
+app.listen(app.get('port'), () => {
+  console.log(`port is running on ${app.get('port')}.`)
 })
 
 module.exports = app

@@ -1,4 +1,3 @@
-
 const folderTestData = require('../../../folderTestData');
 
 const createFolders = async (knex, folder) => {
@@ -23,7 +22,6 @@ const createFolders = async (knex, folder) => {
 const createLink = (knex, link) => {
   return knex('links').insert(link);
 };
-
 
 exports.seed = async (knex) => {
   try {
