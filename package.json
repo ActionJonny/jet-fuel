@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --exit",
+    "test": "./node_modules/.bin/mocha --exit",
     "start": "node server.js",
     "build": "node --trace-deprecation"
   },
