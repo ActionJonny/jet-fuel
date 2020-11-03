@@ -156,15 +156,15 @@ $('.submit').on('click', function (e) {
   // probably should be server side with a 422 missing data
 })
 
-$('.links-div').on('click', '.links', async function () {
-  const folderId = $(this).attr('id')
+$('.links-div').on('click', '.remove-card', async function () {
+  const folderId = $(this).closest('.links').attr('id')
 
   const response = await fetch(`/api/v1/links/${folderId}`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
   })
 
-  $(this).remove()
+  $(this).closest('.links').remove()
 })
 
 $('.link-input').on('keyup', function () {

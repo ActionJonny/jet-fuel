@@ -1,7 +1,4 @@
-// Update with your config settings.
-
 module.exports = {
-
   development: {
     client: 'pg',
     connection: 'postgres://localhost/jetfuel',
@@ -15,7 +12,10 @@ module.exports = {
   },
   production: {
     client: 'pg',
-    connection: process.env.DATABASE_URL + `?ssl=true`,
+    connection: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false
+    },
     migrations: {
       directory: './db/migrations'
     },
@@ -26,7 +26,10 @@ module.exports = {
   },
   staging: {
     client: 'pg',
-    connection: process.env.DATABASE_URL + `?ssl=true`,
+    connection: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false
+    },
     migrations: {
       directory: './db/migrations'
     },
@@ -35,15 +38,15 @@ module.exports = {
       directory: './db/seeds/dev'
     }
   },
-   test: {
-     client: 'pg',
-     connection: process.env.DATABASE_URL || 'postgres://localhost/testdb',
-     migrations: {
-       directory: './db/migrations'
-     },
-     seeds: {
-       directory: './db/seeds/test'
-     },
-     useNullAsDefault: true
-    }
+  test: {
+    client: 'pg',
+    connection: process.env.DATABASE_URL || 'postgres://localhost/testdb',
+    migrations: {
+      directory: './db/migrations'
+    },
+    seeds: {
+      directory: './db/seeds/test'
+    },
+    useNullAsDefault: true
+  }
 };
