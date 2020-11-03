@@ -1,18 +1,18 @@
-machine:
-  timezone:
-    America/Denver
-  node:
-    version: 7.10.0
-  environment:
-    DATABASE_URL: postgresql://ubuntu:@127.0.0.1:5432/circle_test
-
-deployment:
-  staging:
-    branch: staging
-    heroku:
-      appname: shorten-your-url-staging
-
-  production:
-    branch: master
-    heroku:
-      appname: shorten-your-url-with-us
+# machine:
+#   timezone:
+#     America/Denver
+#   node:
+#     version: 7.10.0
+#   environment:
+#     DATABASE_URL: postgresql://ubuntu:@127.0.0.1:5432/circle_test
+#
+# deployment:
+#   staging:
+#     branch: staging
+#     heroku:
+#       appname: shorten-your-url-staging
+#
+#   production:
+#     branch: master
+#     heroku:
+#       appname: shorten-your-url-with-us
