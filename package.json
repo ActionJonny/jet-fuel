@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "body-parser": "^1.17.1",
-    "express": "^4.15.2",
+    "express": "^4.17.3",
     "knex": "^0.13.0",
     "md5": "^2.2.1",
     "pg": "^6.1.5"
